@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once("Database.php");
 require_once("Calculate.php");
 require_once("ReplaceSave.php");
@@ -32,5 +34,10 @@ $resultCalc = $calculate->calc($number1, $number2, $operation);
 $replaceSave->saveDatabase($number1, $operation, $number2, $resultCalc);
 
 $res = $replaceSave->getFromDatabase();
+
+$latestExpression = $number1 . $operation . $number2 . "=" . $resultCalc;
+
+$_SESSION['latestExpression'] = $latestExpression;
+
 echo json_encode($res);
 ?>
